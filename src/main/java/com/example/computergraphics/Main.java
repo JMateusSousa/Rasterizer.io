@@ -61,7 +61,7 @@ class Line {
     private double b, m;
 
 
-    public void createLine(double x, double y) {
+    public void createLine() {
         frag.createFragment(x, y);
         coordinates.addToList(frag);
 
@@ -227,7 +227,7 @@ public class Main {
 
         line.copyData(lineInitialization);
 
-        line.createLine(lineInitialization.getX(), lineInitialization.getY());
+        line.createLine();
 
         System.out.println(line.getCoord());
 
