@@ -22,6 +22,11 @@ class Fragment {
         return yp;
     }
 
+    public void setYp(double Yp) {
+        this.yp = yp;
+    }
+
+
 }
 
 class Coordinates {
@@ -73,14 +78,15 @@ class Line {
         } else {
             //condição em que é criada uma linha vertical
             if (dx == 0) {
-                coordinates.removeFromList(coordinates.getSize() - 1);
-                frag.createFragment(x1, y1);
-                //System.out.println(frag.getXp() + " " + frag.getYp());
-                coordinates.addToList(frag);
-                frag.createFragment(x2, y2);
-                //System.out.println(frag.getXp() + " " + frag.getYp());
-                //verificar o motivo de os valores salvos no objeto frag não estarem sendo adicionados
-                coordinates.addToList(frag);
+                while (x < y2) {
+                    x++;
+                    this.x = x;
+                    y = (m * x) + b;
+                    this.y = y;
+                    frag.createFragment(y, x);
+                    frag.setYp(y2);
+                    coordinates.addToList(frag);
+                }
             } else {
                 while (y < y2) {
                     y++;
@@ -224,10 +230,10 @@ public class Main {
         Line line = new Line();
 
 
-        lineInitialization.setX1(1);
-        lineInitialization.setY1(1);
-        lineInitialization.setX2(1);
-        lineInitialization.setY2(9);
+        lineInitialization.setX1(0);
+        lineInitialization.setY1(0);
+        lineInitialization.setX2(9);
+        lineInitialization.setY2(3);
 
         lineInitialization.initialize();
 
