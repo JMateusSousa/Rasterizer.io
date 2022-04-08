@@ -1,5 +1,3 @@
-package com.example.computergraphics;
-
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +31,6 @@ class Coordinates {
     public void addToList(Fragment points) {
         List<Double> aux = Arrays.asList(points.getXp(), points.getYp());
         list.add(aux);
-
     }
 
     public List getList() {
@@ -47,7 +44,6 @@ class Coordinates {
     public List removeFromList(int i) {
         return list.remove(i);
     }
-
 
 }
 
@@ -75,19 +71,29 @@ class Line {
                 coordinates.addToList(frag);
             }
         } else {
-            while (y < y2) {
-                y++;
-                this.y = y;
-                x = (y - b) / m;
-                this.x = x;
-                frag.createFragment(x, y);
+            //condição em que é criada uma linha vertical
+            if (dx == 0) {
+                coordinates.removeFromList(coordinates.getSize() - 1);
+                frag.createFragment(x1, y1);
+                //System.out.println(frag.getXp() + " " + frag.getYp());
                 coordinates.addToList(frag);
+                frag.createFragment(x2, y2);
+                //System.out.println(frag.getXp() + " " + frag.getYp());
+                //verificar o motivo de os valores salvos no objeto frag não estarem sendo adicionados
+                coordinates.addToList(frag);
+            } else {
+                while (y < y2) {
+                    y++;
+                    this.y = y;
+                    x = (y - b) / m;
+                    this.x = x;
+                    frag.createFragment(x, y);
+                    coordinates.addToList(frag);
+                }
             }
         }
         //Gambiarra. Remove da lista o último elemento, que foi calculado desnecessariamente
         coordinates.removeFromList(coordinates.getSize() - 1);
-
-
     }
 
     public void copyData (Initialization copiedObject) {
@@ -218,19 +224,19 @@ public class Main {
         Line line = new Line();
 
 
-        lineInitialization.setX1(0);
-        lineInitialization.setY1(0);
-        lineInitialization.setX2(9);
-        lineInitialization.setY2(3);
+        lineInitialization.setX1(1);
+        lineInitialization.setY1(1);
+        lineInitialization.setX2(1);
+        lineInitialization.setY2(9);
 
         lineInitialization.initialize();
 
         line.copyData(lineInitialization);
 
+        //line.createLine(lineInitialization.getX(), lineInitialization.getY());
         line.createLine();
 
         System.out.println(line.getCoord());
 
     }
-
 }
