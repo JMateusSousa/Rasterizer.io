@@ -11,6 +11,8 @@ import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class LineSegmentController implements Initializable {
@@ -19,6 +21,20 @@ public class LineSegmentController implements Initializable {
     @FXML public ChoiceBox resolutionBox;
     @FXML public TextField linePointOne;
     @FXML public TextField linePointTwo;
+
+    double width = 0;
+//    List<List<Double>> list =  List.of(
+//            List.of(0.5, 0.5),
+//            List.of(1.5, 0.5),
+//            List.of(2.5, 0.5),
+//            List.of(3.5, 1.5),
+//            List.of(4.5, 1.5),
+//            List.of(5.5, 1.5),
+//            List.of(6.5, 2.5),
+//            List.of(7.5, 2.5),
+//            List.of(8.5, 2.5)
+//            );
+    List<List<Double>> list = new ArrayList<List<Double>>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -39,15 +55,34 @@ public class LineSegmentController implements Initializable {
         } else {
             resolution = 10;
         }
+
+        Line line = new Line();
+
+        Initialization lineInitialization = new Initialization();
+        com.example.computergraphics.Line lineAbstrated = new com.example.computergraphics.Line();
+
+        line.setStartX(points.get(0) * width);
+        lineInitialization.setX1(points.get(0));
+
+        line.setStartY(points.get(1) * width);
+        lineInitialization.setY1(points.get(1));
+
+        line.setEndX(points.get(2) * width);
+        lineInitialization.setX2(points.get(2));
+
+        line.setEndY(points.get(3) * width);
+        lineInitialization.setY2(points.get(3));
+
+        lineInitialization.initialize();
+        lineAbstrated.copyData(lineInitialization);
+        lineAbstrated.createLine();
+
+        this.list = lineAbstrated.getCoord();
+        System.out.println(list);
         this.paneLine.getChildren().add(makeGrid(resolution));
 
-        Line redLine = new Line();
-        redLine.setStartX(points.get(0));
-        redLine.setStartY(points.get(1));
-        redLine.setEndX(points.get(2));
-        redLine.setEndY(points.get(3));
-        redLine.setStroke(Color.WHITE);
-        paneLine.getChildren().add(redLine);
+        line.setStroke(Color.WHITE);
+        paneLine.getChildren().add(line);
     }
 
     private ArrayList<Integer> getPoints() {
@@ -69,7 +104,7 @@ public class LineSegmentController implements Initializable {
 
     public Pane makeGrid(int n) {
 
-        double width = paneLine.getPrefWidth()/n;
+        width = paneLine.getPrefWidth()/n;
         Pane p = new Pane();
         p.setPrefSize(paneLine.getPrefWidth(), paneLine.getPrefHeight());
 
@@ -84,6 +119,11 @@ public class LineSegmentController implements Initializable {
                 rec[i][j].setHeight(width);
                 rec[i][j].setFill(Color.ORANGE);
                 rec[i][j].setStroke(Color.BLACK);
+
+                if (list.contains(Arrays.asList((rec[i][j].getX() + width / 2) / width,
+                            (rec[i][j].getY() + width / 2) / width))) {
+                        rec[i][j].setFill(Color.GREEN);
+                    }
                 p.getChildren().add(rec[i][j]);
             }
         }
