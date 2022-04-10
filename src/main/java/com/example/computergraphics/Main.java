@@ -4,6 +4,108 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+class Square {
+    private Fragment frag = new Fragment();
+    private Coordinates coordinates1 = new Coordinates();
+    private Coordinates coordinates2 = new Coordinates();
+    private Coordinates coordinates3 = new Coordinates();
+    private Coordinates coordinates4 = new Coordinates();
+    private double initialPoint, finalPoint;
+    private int squareSize, x, y;
+
+    /*
+    Classe que desenha o quadrado. O quadrado será criado a partir do ponto (x, y) definido pelo usuário.
+    O tamanho do quadrado será dado pelo tamanho do lado inserido pelo usuário.
+    As variáveis initialPoint e finalPoint são auxiliares que copiam os valores de entrada do ponto
+    desejado.
+    Cada uma das variáveis coordinates armazena uma das linhas necessárias pra desenhar o quadrado.
+    coordinates1: linha horizontal inferior
+    coordinates2: linha horizontal superior
+    coordinates3: linha vertical esquerda
+    coordinates4: linha vertical direita
+
+
+                     coordinates2
+
+                     [-----------]
+                     |-----------|
+    coordinates3 ->  |-----------|   <- coordinates4
+                     [-----------]
+                           ^
+                           |
+                      coordinates1
+     */
+
+    public void createSquare() {
+
+        this.initialPoint = x;
+        this.finalPoint = y;
+
+        //cria as linhas horizontais do quadrado (deveria funcionar, mas
+        // por algum motivo os valores das duas listas estão repetidos)
+        /*for (int i = x; i < squareSize; i++) {
+            frag.createFragment(initialPoint, finalPoint);
+            coordinates1.addToList(frag);
+            initialPoint++;
+            finalPoint += squareSize;
+            frag.setXp(initialPoint);
+            frag.setYp(finalPoint);
+            coordinates2.addToList(frag);
+            finalPoint -= squareSize;
+        }*/
+        //cria a linha horizontal inferior do quadrado
+        for (int i = x; i < squareSize; i++) {
+            frag.createFragment(initialPoint, finalPoint);
+            coordinates1.addToList(frag);
+            initialPoint++;
+        }
+
+        //cria a linha horizontal superior do quadrado
+        initialPoint = x;
+        finalPoint = y + squareSize;
+        for (int i = x; i < squareSize; i++) {
+            frag.createFragment(initialPoint, finalPoint);
+            coordinates2.addToList(frag);
+            initialPoint++;
+        }
+
+        //cria linha vertical esquerda
+        initialPoint = x;
+        finalPoint = y;
+        for (int i = x; i < squareSize; i++) {
+            frag.createFragment(initialPoint, finalPoint);
+            coordinates3.addToList(frag);
+            finalPoint++;
+        }
+
+        //cria linha vertical direita
+        initialPoint = x + squareSize;
+        finalPoint = y;
+        for (int i = x; i < squareSize; i++) {
+            frag.createFragment(initialPoint, finalPoint);
+            coordinates4.addToList(frag);
+            finalPoint++;
+        }
+
+        //System.out.println(coordinates1.getList());
+        //System.out.println(coordinates2.getList());
+        //System.out.println(coordinates3.getList());
+        //System.out.println(coordinates4.getList());
+
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setSquareSize(int squareSize) {
+        this.squareSize = squareSize;
+    }
+}
+
 class Fragment {
     private double xm, ym;
     private double xp, yp;
