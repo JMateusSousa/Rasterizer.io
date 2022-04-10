@@ -82,6 +82,7 @@ public class LineSegmentController implements Initializable {
         this.paneLine.getChildren().add(makeGrid(resolution));
 
         line.setStroke(Color.WHITE);
+        line.setStrokeWidth(6);
         paneLine.getChildren().add(line);
     }
 
