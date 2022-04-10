@@ -231,6 +231,8 @@ class Initialization {
     private double b, m;
 
     public void initialize() {
+        this.x = x1;
+        this.y = y1;
         this.dx = x2 - x1;
         this.dy = y2 - y1;
 
@@ -239,8 +241,7 @@ class Initialization {
         } else {
             this.m = dy / dx;
         }
-
-        this.b = y - m*x;
+        this.b = y1 - (m * x1);
     }
 
     public void setX(double x1) {
@@ -323,7 +324,6 @@ class Initialization {
     public double getM() {
         return m;
     }
-
 }
 
 public class Main {
