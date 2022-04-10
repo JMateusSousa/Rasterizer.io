@@ -62,7 +62,7 @@ class Square {
 
         //cria a linha horizontal superior do quadrado
         initialPoint = x;
-        finalPoint = y + squareSize;
+        finalPoint = y + squareSize - 1;
         for (int i = x; i < squareSize; i++) {
             frag.createFragment(initialPoint, finalPoint);
             coordinates2.addToList(frag);
@@ -79,7 +79,7 @@ class Square {
         }
 
         //cria linha vertical direita
-        initialPoint = x + squareSize;
+        initialPoint = x + squareSize - 1;
         finalPoint = y;
         for (int i = x; i < squareSize; i++) {
             frag.createFragment(initialPoint, finalPoint);
