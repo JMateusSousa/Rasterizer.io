@@ -156,7 +156,6 @@ class Coordinates {
 
 }
 
-
 class Line {
     private Fragment frag = new Fragment();
     private List<Double> aux = new ArrayList<Double>();
@@ -165,8 +164,8 @@ class Line {
     private double y, y1, y2, dy;
     private double b, m;
 
-
     public void createLine() {
+        double fixedX = x;
         frag.createFragment(x, y);
         coordinates.addToList(frag);
 
@@ -176,34 +175,31 @@ class Line {
                 this.x = x;
                 y = (m * x) + b;
                 this.y = y;
-                frag.createFragment(x, y);
-                coordinates.addToList(frag);
-            }
-        } else {
-            //condição em que é criada uma linha vertical
-            if (dx == 0) {
-                while (x < y2) {
-                    x++;
-                    this.x = x;
-                    y = (m * x) + b;
-                    this.y = y;
-                    frag.createFragment(y, x);
-                    frag.setYp(y2);
+                if (dx == 0) {
+                    frag.createFragment(fixedX, y);
                     coordinates.addToList(frag);
-                }
-            } else {
-                while (y < y2) {
-                    y++;
-                    this.y = y;
-                    x = (y - b) / m;
-                    this.x = x;
+                } else {
                     frag.createFragment(x, y);
                     coordinates.addToList(frag);
                 }
             }
+        } else {
+            while (y < y2) {
+            y++;
+            this.y = y;
+            x = (y - b) / m;
+            this.x = x;
+            if (dx == 0) {
+                frag.createFragment(fixedX, y);
+                coordinates.addToList(frag);
+            } else {
+                frag.createFragment(x, y);
+                coordinates.addToList(frag);
+            }
+            }
         }
-        //Gambiarra. Remove da lista o último elemento, que foi calculado desnecessariamente
-        coordinates.removeFromList(coordinates.getSize() - 1);
+    //Gambiarra. Remove da lista o último elemento, que foi calculado desnecessariamente
+    coordinates.removeFromList(coordinates.getSize() - 1);
     }
 
     public void copyData (Initialization copiedObject) {
