@@ -165,41 +165,49 @@ class Line {
     private double b, m;
 
     public void createLine() {
-        double fixedX = x;
         frag.createFragment(x, y);
         coordinates.addToList(frag);
 
-        if (dx > dy) {
-            while (x < x2) {
-                x++;
-                this.x = x;
-                y = (m * x) + b;
-                this.y = y;
-                if (dx == 0) {
-                    frag.createFragment(fixedX, y);
+        if (dx == 0) {
+            if (m == Double.POSITIVE_INFINITY) {
+                while (y <= y2) {
+                    y++;
+                    this.y = y;
+                    frag.createFragment(x, y);
                     coordinates.addToList(frag);
-                } else {
+                }
+            } else {
+                while (y2 <= y) {
+                    y--;
+                    this.y = y;
                     frag.createFragment(x, y);
                     coordinates.addToList(frag);
                 }
             }
         } else {
-            while (y < y2) {
-            y++;
-            this.y = y;
-            x = (y - b) / m;
-            this.x = x;
-            if (dx == 0) {
-                frag.createFragment(fixedX, y);
-                coordinates.addToList(frag);
+            if (dx > dy) {
+                while (x < x2) {
+                    x++;
+                    this.x = x;
+                    y = (m * x) + b;
+                    this.y = y;
+                    frag.createFragment(x, y);
+                    coordinates.addToList(frag);
+                }
             } else {
-                frag.createFragment(x, y);
-                coordinates.addToList(frag);
-            }
+                while (y < y2) {
+                    y++;
+                    this.y = y;
+                    x = (y - b) / m;
+                    this.x = x;
+                    frag.createFragment(x, y);
+                    coordinates.addToList(frag);
+                }
             }
         }
-    //Gambiarra. Remove da lista o último elemento, que foi calculado desnecessariamente
-    coordinates.removeFromList(coordinates.getSize() - 1);
+        
+        //Gambiarra. Remove da lista o último elemento, que foi calculado desnecessariamente
+        coordinates.removeFromList(coordinates.getSize() - 1);
     }
 
     public void copyData (Initialization copiedObject) {
@@ -218,7 +226,6 @@ class Line {
     public List getCoord() {
         return coordinates.getList();
     }
-
 }
 
 class Initialization {
