@@ -239,11 +239,7 @@ class Initialization {
         this.dx = x2 - x1;
         this.dy = y2 - y1;
 
-        if (dx == 0) {
-            this.m = 0;
-        } else {
-            this.m = dy / dx;
-        }
+        this.m = dy / dx;
         this.b = y1 - (m * x1);
     }
 
