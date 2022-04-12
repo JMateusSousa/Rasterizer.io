@@ -510,26 +510,56 @@ class Line {
     private double b, m;
 
     public void createLine() {
-        frag.createFragment(x, y);
-        coordinates.addToList(frag);
+//        frag.createFragment(x, y);
+//        coordinates.addToList(frag);
 
+        // se linha na vertical
         if (dx == 0) {
-            if (m == Double.POSITIVE_INFINITY) {
-                while (y <= y2) {
-                    y++;
-                    this.y = y;
+            if(x != 0) {
+                x--;
+            }
+            if(dy < 0) {
+                y--;
+                while (y >= y2 - 1) {
                     frag.createFragment(x, y);
+                    y--;
+                    this.y = y;
                     coordinates.addToList(frag);
                 }
             } else {
-                while (y2 <= y) {
-                    y--;
-                    this.y = y;
+                while (y2 >= y) {
                     frag.createFragment(x, y);
+                    y++;
+                    this.y = y;
+                    coordinates.addToList(frag);
+                }
+            }
+        }
+
+        // se linha horizontal
+        else if(dy == 0) {
+            if(y != 0) {
+                y--;
+            }
+            if(dx < 0) {
+                x--;
+                while(x >= x2 - 1) {
+                    frag.createFragment(x, y);
+                    x--;
+                    this.x = x;
+                    coordinates.addToList(frag);
+                }
+            } else {
+                while (x2 >= x) {
+                    frag.createFragment(x, y);
+                    x++;
+                    this.x = x;
                     coordinates.addToList(frag);
                 }
             }
         } else {
+            frag.createFragment(x, y);
+            coordinates.addToList(frag);
             if (dx > dy) {
                 while (x < x2) {
                     x++;
@@ -692,7 +722,7 @@ public class Main {
 
         System.out.println(line.getCoord());
 
-        /*
+/*
         Triangle triangle = new Triangle();
         triangle.setX1(0);
         triangle.setY1(0);
@@ -700,7 +730,7 @@ public class Main {
         triangle.setY2(0);
         triangle.setX3(6);
         triangle.setY3(11);
-        triangle.createTriangle();
+        triangle.createTriangle();*/
 
 
         Square square = new Square();
@@ -714,7 +744,7 @@ public class Main {
         square.setY4(0);
         square.createSquare();
 
-        Square square = new Hexagon();
+        /*Square square = new Hexagon();
         hexagon.setX1();
         hexagon.setY1();
         hexagon.setX2();
@@ -727,9 +757,8 @@ public class Main {
         hexagon.setY5();
         hexagon.setX6();
         hexagon.setY6();
-        hexagon.createHexagon();
+        hexagon.createHexagon();*/
 
-        */
 
     }
 }
