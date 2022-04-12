@@ -109,7 +109,7 @@ class Square {
     private Coordinates coordinates2 = new Coordinates();
     private Coordinates coordinates3 = new Coordinates();
     private Coordinates coordinates4 = new Coordinates();
-    private Coordinates squareCoordinates = new Coordinates();
+    public Coordinates squareCoordinates = new Coordinates();
     private double x1, y1, x2, y2, x3, y3, x4, y4;
 
     /*
@@ -179,13 +179,7 @@ class Square {
         squareCoordinates.addList(line3.getCoord());
         squareCoordinates.addList(line4.getCoord());
 
-        System.out.println(squareCoordinates.getList());
-
-        //System.out.println(coordinates1.getList());
-        //System.out.println(coordinates2.getList());
-        //System.out.println(coordinates3.getList());
-        //System.out.println(coordinates4.getList());
-
+        System.out.println("pontos das retas: " + squareCoordinates.getList());
     }
 
     public double getX1() {
@@ -510,9 +504,6 @@ class Line {
     private double b, m;
 
     public void createLine() {
-//        frag.createFragment(x, y);
-//        coordinates.addToList(frag);
-
         // se linha na vertical
         if (dx == 0) {
             if(x != 0) {
@@ -558,8 +549,22 @@ class Line {
                 }
             }
         } else {
+            if(dx < 0) {
+                dx = dx * -1;
+                double aux = x;
+                x = x2;
+                x2 = aux;
+            }
+            if(dy < 0){
+                dy = dy * -1;
+                double aux = y;
+                y = y2;
+                y2 = aux;
+            }
+
             frag.createFragment(x, y);
             coordinates.addToList(frag);
+
             if (dx > dy) {
                 while (x < x2) {
                     x++;
@@ -708,10 +713,10 @@ public class Main {
         Line line = new Line();
 
 
-        lineInitialization.setX1(0);
-        lineInitialization.setY1(5);
-        lineInitialization.setX2(5);
-        lineInitialization.setY2(5);
+        lineInitialization.setX1(9);
+        lineInitialization.setY1(3);
+        lineInitialization.setX2(0);
+        lineInitialization.setY2(0);
 
         lineInitialization.initialize();
 
@@ -732,17 +737,17 @@ public class Main {
         triangle.setY3(11);
         triangle.createTriangle();*/
 
-
-        Square square = new Square();
-        square.setX1(0);
-        square.setY1(0);
-        square.setX2(0);
-        square.setY2(5);
-        square.setX3(5);
-        square.setY3(5);
-        square.setX4(5);
-        square.setY4(0);
-        square.createSquare();
+//
+//        Square square = new Square();
+//        square.setX1(0);
+//        square.setY1(0);
+//        square.setX2(0);
+//        square.setY2(5);
+//        square.setX3(5);
+//        square.setY3(5);
+//        square.setX4(5);
+//        square.setY4(0);
+//        square.createSquare();
 
         /*Square square = new Hexagon();
         hexagon.setX1();
@@ -758,7 +763,5 @@ public class Main {
         hexagon.setX6();
         hexagon.setY6();
         hexagon.createHexagon();*/
-
-
     }
 }

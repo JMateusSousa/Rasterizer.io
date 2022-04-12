@@ -49,6 +49,7 @@ public class PolygonController implements Initializable {
 //            List.of(8.5, 2.5)
 //            );
     List<List<Double>> list = new ArrayList<List<Double>>();
+    ArrayList<Integer> points;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -61,7 +62,6 @@ public class PolygonController implements Initializable {
     private void plotGraphics() {
         int resolution = 0;
         int pointNumber = 3;
-        ArrayList<Integer> points;
 
         if(tabPane.getSelectionModel().getSelectedIndex() == 0) {
            points = getTrianglePoints();
@@ -94,12 +94,69 @@ public class PolygonController implements Initializable {
 
             k = k + 1;
         }
+
+        generateList(pointNumber);
         this.panePolygons.getChildren().add(makeGrid(resolution));
 
         for(int i = 0; i < pointNumber; i++) {
             line.get(i).setStroke(Color.WHITE);
             line.get(i).setStrokeWidth(6);
             panePolygons.getChildren().add(line.get(i));
+        }
+    }
+
+    private void generateList(int pointNumber) {
+        if(pointNumber == 3) {
+            Triangle triangle = new Triangle();
+            triangle.setX1(points.get(0));
+            triangle.setY1(points.get(1));
+
+            triangle.setX2(points.get(2));
+            triangle.setY2(points.get(3));
+
+            triangle.setX3(points.get(4));
+            triangle.setX3(points.get(5));
+
+            triangle.createTriangle();
+
+        } else if(pointNumber == 4) {
+            Square square = new Square();
+            square.setX1(points.get(0));
+            square.setY1(points.get(1));
+
+            square.setX2(points.get(2));
+            square.setY2(points.get(3));
+
+            square.setX3(points.get(4));
+            square.setY3(points.get(5));
+
+            square.setX4(points.get(6));
+            square.setY4(points.get(7));
+
+            square.createSquare();
+            list = square.squareCoordinates.getList();
+            System.out.println("pontos das retas: " + list);
+        } else {
+            Hexagon hexagon = new Hexagon();
+            hexagon.setX1(points.get(0));
+            hexagon.setY1(points.get(1));
+
+            hexagon.setX2(points.get(2));
+            hexagon.setY2(points.get(3));
+
+            hexagon.setX3(points.get(4));
+            hexagon.setX3(points.get(5));
+
+            hexagon.setX4(points.get(6));
+            hexagon.setX4(points.get(7));
+
+            hexagon.setX5(points.get(8));
+            hexagon.setX5(points.get(9));
+
+            hexagon.setX6(points.get(10));
+            hexagon.setX6(points.get(11));
+
+            hexagon.createHexagon();
         }
     }
 
@@ -176,6 +233,7 @@ public class PolygonController implements Initializable {
         points.add(Integer.valueOf(numberOne));
         points.add(Integer.valueOf(numberTwo));
 
+        // Adiciona o primeiro para para ligar a ultima reta
         points.add(points.get(0));
         points.add(points.get(1));
 
