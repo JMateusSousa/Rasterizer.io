@@ -1,8 +1,107 @@
 package com.example.computergraphics;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
+class Triangle {
+    private Fragment frag = new Fragment();
+    private Coordinates coordinates1 = new Coordinates();
+    private Coordinates coordinates2 = new Coordinates();
+    private Coordinates coordinates3 = new Coordinates();
+    private Coordinates triangleCoordinates = new Coordinates();
+    private double x1, y1, x2, y2, x3, y3;
+
+    public void createTriangle() {
+        Initialization lineInitialization = new Initialization();
+        Line line1 = new Line();
+        Line line2 = new Line();
+        Line line3 = new Line();
+
+        lineInitialization.setX1(x1);
+        lineInitialization.setY1(y1);
+        lineInitialization.setX2(x2);
+        lineInitialization.setY2(y2);
+        lineInitialization.initialize();
+
+        line1.copyData(lineInitialization);
+        line1.createLine();
+
+        lineInitialization.setX1(x1);
+        lineInitialization.setY1(y1);
+        lineInitialization.setX2(x3);
+        lineInitialization.setY2(y3);
+        lineInitialization.initialize();
+
+        line2.copyData(lineInitialization);
+        line2.createLine();
+
+        lineInitialization.setX1(x2);
+        lineInitialization.setY1(y2);
+        lineInitialization.setX2(x3);
+        lineInitialization.setY2(y3);
+        lineInitialization.initialize();
+
+        line3.copyData(lineInitialization);
+        line3.createLine();
+
+
+        triangleCoordinates.addList(line1.getCoord());
+        triangleCoordinates.addList(line2.getCoord());
+        triangleCoordinates.addList(line3.getCoord());
+
+        System.out.println(triangleCoordinates.getList());
+
+    }
+
+    public double getX1() {
+        return x1;
+    }
+
+    public void setX1(double x1) {
+        this.x1 = x1;
+    }
+
+    public double getY1() {
+        return y1;
+    }
+
+    public void setY1(double y1) {
+        this.y1 = y1;
+    }
+
+    public double getX2() {
+        return x2;
+    }
+
+    public void setX2(double x2) {
+        this.x2 = x2;
+    }
+
+    public double getY2() {
+        return y2;
+    }
+
+    public void setY2(double y2) {
+        this.y2 = y2;
+    }
+
+    public double getX3() {
+        return x3;
+    }
+
+    public void setX3(double x3) {
+        this.x3 = x3;
+    }
+
+    public double getY3() {
+        return y3;
+    }
+
+    public void setY3(double y3) {
+        this.y3 = y3;
+    }
+}
 
 class Square {
     private Fragment frag = new Fragment();
@@ -10,15 +109,10 @@ class Square {
     private Coordinates coordinates2 = new Coordinates();
     private Coordinates coordinates3 = new Coordinates();
     private Coordinates coordinates4 = new Coordinates();
-    private double initialPoint, finalPoint;
-    private int squareSize, x, y;
+    private Coordinates squareCoordinates = new Coordinates();
+    private double x1, y1, x2, y2, x3, y3, x4, y4;
 
     /*
-    Classe que desenha o quadrado. O quadrado será criado a partir do ponto (x, y) definido pelo usuário.
-    O tamanho do quadrado será dado pelo tamanho do lado inserido pelo usuário.
-    As variáveis initialPoint e finalPoint são auxiliares que copiam os valores de entrada do ponto
-    desejado.
-    Cada uma das variáveis coordinates armazena uma das linhas necessárias pra desenhar o quadrado.
     coordinates1: linha horizontal inferior
     coordinates2: linha horizontal superior
     coordinates3: linha vertical esquerda
@@ -37,55 +131,55 @@ class Square {
      */
 
     public void createSquare() {
+        Initialization lineInitialization = new Initialization();
+        Line line1 = new Line();
+        Line line2 = new Line();
+        Line line3 = new Line();
+        Line line4 = new Line();
 
-        this.initialPoint = x;
-        this.finalPoint = y;
+        lineInitialization.setX1(x1);
+        lineInitialization.setY1(y1);
+        lineInitialization.setX2(x2);
+        lineInitialization.setY2(y2);
+        lineInitialization.initialize();
 
-        //cria as linhas horizontais do quadrado (deveria funcionar, mas
-        // por algum motivo os valores das duas listas estão repetidos)
-        /*for (int i = x; i < squareSize; i++) {
-            frag.createFragment(initialPoint, finalPoint);
-            coordinates1.addToList(frag);
-            initialPoint++;
-            finalPoint += squareSize;
-            frag.setXp(initialPoint);
-            frag.setYp(finalPoint);
-            coordinates2.addToList(frag);
-            finalPoint -= squareSize;
-        }*/
-        //cria a linha horizontal inferior do quadrado
-        for (int i = x; i < squareSize; i++) {
-            frag.createFragment(initialPoint, finalPoint);
-            coordinates1.addToList(frag);
-            initialPoint++;
-        }
+        line1.copyData(lineInitialization);
+        line1.createLine();
 
-        //cria a linha horizontal superior do quadrado
-        initialPoint = x;
-        finalPoint = y + squareSize - 1;
-        for (int i = x; i < squareSize; i++) {
-            frag.createFragment(initialPoint, finalPoint);
-            coordinates2.addToList(frag);
-            initialPoint++;
-        }
+        lineInitialization.setX1(x1);
+        lineInitialization.setY1(y1);
+        lineInitialization.setX2(x4);
+        lineInitialization.setY2(y4);
+        lineInitialization.initialize();
 
-        //cria linha vertical esquerda
-        initialPoint = x;
-        finalPoint = y;
-        for (int i = x; i < squareSize; i++) {
-            frag.createFragment(initialPoint, finalPoint);
-            coordinates3.addToList(frag);
-            finalPoint++;
-        }
+        line2.copyData(lineInitialization);
+        line2.createLine();
 
-        //cria linha vertical direita
-        initialPoint = x + squareSize - 1;
-        finalPoint = y;
-        for (int i = x; i < squareSize; i++) {
-            frag.createFragment(initialPoint, finalPoint);
-            coordinates4.addToList(frag);
-            finalPoint++;
-        }
+        lineInitialization.setX1(x2);
+        lineInitialization.setY1(y2);
+        lineInitialization.setX2(x3);
+        lineInitialization.setY2(y3);
+        lineInitialization.initialize();
+
+        line3.copyData(lineInitialization);
+        line3.createLine();
+
+        lineInitialization.setX1(x3);
+        lineInitialization.setY1(y3);
+        lineInitialization.setX2(x4);
+        lineInitialization.setY2(y4);
+        lineInitialization.initialize();
+
+        line4.copyData(lineInitialization);
+        line4.createLine();
+
+
+        squareCoordinates.addList(line1.getCoord());
+        squareCoordinates.addList(line2.getCoord());
+        squareCoordinates.addList(line3.getCoord());
+        squareCoordinates.addList(line4.getCoord());
+
+        System.out.println(squareCoordinates.getList());
 
         //System.out.println(coordinates1.getList());
         //System.out.println(coordinates2.getList());
@@ -94,15 +188,257 @@ class Square {
 
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-    public void setY(int y) {
-        this.y = y;
+    public double getX1() {
+        return x1;
     }
 
-    public void setSquareSize(int squareSize) {
-        this.squareSize = squareSize;
+    public void setX1(double x1) {
+        this.x1 = x1;
+    }
+
+    public double getY1() {
+        return y1;
+    }
+
+    public void setY1(double y1) {
+        this.y1 = y1;
+    }
+
+    public double getX2() {
+        return x2;
+    }
+
+    public void setX2(double x2) {
+        this.x2 = x2;
+    }
+
+    public double getY2() {
+        return y2;
+    }
+
+    public void setY2(double y2) {
+        this.y2 = y2;
+    }
+
+    public double getX3() {
+        return x3;
+    }
+
+    public void setX3(double x3) {
+        this.x3 = x3;
+    }
+
+    public double getY3() {
+        return y3;
+    }
+
+    public void setY3(double y3) {
+        this.y3 = y3;
+    }
+
+    public double getX4() {
+        return x4;
+    }
+
+    public void setX4(double x4) {
+        this.x4 = x4;
+    }
+
+    public double getY4() {
+        return y4;
+    }
+
+    public void setY4(double y4) {
+        this.y4 = y4;
+    }
+}
+
+class Hexagon {
+    private Fragment frag = new Fragment();
+    private Coordinates coordinates1 = new Coordinates();
+    private Coordinates coordinates2 = new Coordinates();
+    private Coordinates coordinates3 = new Coordinates();
+    private Coordinates coordinates4 = new Coordinates();
+    private Coordinates coordinates5 = new Coordinates();
+    private Coordinates coordinates6 = new Coordinates();
+    private Coordinates hexagonCoordinates = new Coordinates();
+    private double x1, y1, x2, y2, x3, y3, x4, y4, x5, y5, x6, y6;
+
+    public void createHexagon() {
+        Initialization lineInitialization = new Initialization();
+        Line line1 = new Line();
+        Line line2 = new Line();
+        Line line3 = new Line();
+        Line line4 = new Line();
+        Line line5 = new Line();
+        Line line6 = new Line();
+
+        /*
+        lineInitialization.setX1();
+        lineInitialization.setY1();
+        lineInitialization.setX2();
+        lineInitialization.setY2();
+        lineInitialization.initialize();
+
+        line1.copyData(lineInitialization);
+        line1.createLine();
+
+        lineInitialization.setX1();
+        lineInitialization.setY1();
+        lineInitialization.setX2();
+        lineInitialization.setY2();
+        lineInitialization.initialize();
+
+        line2.copyData(lineInitialization);
+        line2.createLine();
+
+        lineInitialization.setX1();
+        lineInitialization.setY1();
+        lineInitialization.setX2();
+        lineInitialization.setY2();
+        lineInitialization.initialize();
+
+        line3.copyData(lineInitialization);
+        line3.createLine();
+
+        lineInitialization.setX1();
+        lineInitialization.setY1();
+        lineInitialization.setX2();
+        lineInitialization.setY2();
+        lineInitialization.initialize();
+
+        line4.copyData(lineInitialization);
+        line4.createLine();
+
+        lineInitialization.setX1();
+        lineInitialization.setY1();
+        lineInitialization.setX2();
+        lineInitialization.setY2();
+        lineInitialization.initialize();
+
+        line5.copyData(lineInitialization);
+        line5.createLine();
+
+        lineInitialization.setX1();
+        lineInitialization.setY1();
+        lineInitialization.setX2();
+        lineInitialization.setY2();
+        lineInitialization.initialize();
+
+        line6.copyData(lineInitialization);
+        line6.createLine();
+        */
+
+
+
+        /*
+        hexagonCoordinates.addList(line1.getCoord());
+        hexagonCoordinates.addList(line2.getCoord());
+        hexagonCoordinates.addList(line3.getCoord());
+        hexagonCoordinates.addList(line4.getCoord());
+        hexagonCoordinates.addList(line5.getCoord());
+        hexagonCoordinates.addList(line6.getCoord());
+
+        System.out.println(hexagonCoordinates.getList());
+
+        */
+
+    }
+
+    public double getX1() {
+        return x1;
+    }
+
+    public void setX1(double x1) {
+        this.x1 = x1;
+    }
+
+    public double getY1() {
+        return y1;
+    }
+
+    public void setY1(double y1) {
+        this.y1 = y1;
+    }
+
+    public double getX2() {
+        return x2;
+    }
+
+    public void setX2(double x2) {
+        this.x2 = x2;
+    }
+
+    public double getY2() {
+        return y2;
+    }
+
+    public void setY2(double y2) {
+        this.y2 = y2;
+    }
+
+    public double getX3() {
+        return x3;
+    }
+
+    public void setX3(double x3) {
+        this.x3 = x3;
+    }
+
+    public double getY3() {
+        return y3;
+    }
+
+    public void setY3(double y3) {
+        this.y3 = y3;
+    }
+
+    public double getX4() {
+        return x4;
+    }
+
+    public void setX4(double x4) {
+        this.x4 = x4;
+    }
+
+    public double getY4() {
+        return y4;
+    }
+
+    public void setY4(double y4) {
+        this.y4 = y4;
+    }
+
+    public double getX5() {
+        return x5;
+    }
+
+    public void setX5(double x5) {
+        this.x5 = x5;
+    }
+
+    public double getY5() {
+        return y5;
+    }
+
+    public void setY5(double y5) {
+        this.y5 = y5;
+    }
+
+    public double getX6() {
+        return x6;
+    }
+
+    public void setX6(double x6) {
+        this.x6 = x6;
+    }
+
+    public double getY6() {
+        return y6;
+    }
+
+    public void setY6(double y6) {
+        this.y6 = y6;
     }
 }
 
@@ -126,12 +462,17 @@ class Fragment {
         return yp;
     }
 
+    public void setXp(double Xp) {
+        this.xp = xp;
+    }
+
     public void setYp(double Yp) {
         this.yp = yp;
     }
 
 
 }
+
 
 class Coordinates {
     private List<List<Double>> list = new ArrayList<List<Double>>();
@@ -152,6 +493,10 @@ class Coordinates {
 
     public List removeFromList(int i) {
         return list.remove(i);
+    }
+
+    public void addList(List coordinates) {
+        list.add(coordinates);
     }
 
 }
@@ -205,7 +550,7 @@ class Line {
                 }
             }
         }
-        
+
         //Gambiarra. Remove da lista o último elemento, que foi calculado desnecessariamente
         coordinates.removeFromList(coordinates.getSize() - 1);
     }
@@ -334,9 +679,9 @@ public class Main {
 
 
         lineInitialization.setX1(0);
-        lineInitialization.setY1(0);
-        lineInitialization.setX2(9);
-        lineInitialization.setY2(3);
+        lineInitialization.setY1(5);
+        lineInitialization.setX2(5);
+        lineInitialization.setY2(5);
 
         lineInitialization.initialize();
 
@@ -346,6 +691,45 @@ public class Main {
         line.createLine();
 
         System.out.println(line.getCoord());
+
+        /*
+        Triangle triangle = new Triangle();
+        triangle.setX1(0);
+        triangle.setY1(0);
+        triangle.setX2(13);
+        triangle.setY2(0);
+        triangle.setX3(6);
+        triangle.setY3(11);
+        triangle.createTriangle();
+
+
+        Square square = new Square();
+        square.setX1(0);
+        square.setY1(0);
+        square.setX2(0);
+        square.setY2(5);
+        square.setX3(5);
+        square.setY3(5);
+        square.setX4(5);
+        square.setY4(0);
+        square.createSquare();
+
+        Square square = new Hexagon();
+        hexagon.setX1();
+        hexagon.setY1();
+        hexagon.setX2();
+        hexagon.setY2();
+        hexagon.setX3();
+        hexagon.setY3();
+        hexagon.setX4();
+        hexagon.setY4();
+        hexagon.setX5();
+        hexagon.setY5();
+        hexagon.setX6();
+        hexagon.setY6();
+        hexagon.createHexagon();
+
+        */
 
     }
 }
