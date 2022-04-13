@@ -50,6 +50,7 @@ public class PolygonController implements Initializable {
 //            );
     List<List<Double>> list = new ArrayList<List<Double>>();
     ArrayList<Integer> points;
+    int resolution = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -60,7 +61,6 @@ public class PolygonController implements Initializable {
 
     @FXML
     private void plotGraphics() {
-        int resolution = 0;
         int pointNumber = 3;
 
         if(tabPane.getSelectionModel().getSelectedIndex() == 0) {
@@ -237,8 +237,12 @@ public class PolygonController implements Initializable {
         points.add(points.get(0));
         points.add(points.get(1));
 
-        System.out.println(points);
-        return points;
+        ArrayList<Integer> pointsCorrect = new ArrayList<>();
+
+        for(int i = 0; i < points.size(); i++) {
+            pointsCorrect.add(Integer.valueOf(points.get(i) * resolution/10));
+        }
+        return pointsCorrect;
     }
 
     private ArrayList<Integer> getTrianglePoints() {
@@ -288,9 +292,11 @@ public class PolygonController implements Initializable {
                 rec[i][j].setFill(Color.ORANGE);
                 rec[i][j].setStroke(Color.BLACK);
 
-                if (list.contains(Arrays.asList((rec[i][j].getX() + width / 2) / width,
-                        (rec[i][j].getY() + width / 2) / width))) {
-                    rec[i][j].setFill(Color.GREEN);
+                for(int index = 0; index < list.size(); index++) {
+                    if (list.get(index).contains(Arrays.asList((rec[i][j].getX() + width / 2) / width,
+                            (rec[i][j].getY() + width / 2) / width))) {
+                        rec[i][j].setFill(Color.GREEN);
+                    }
                 }
                 p.getChildren().add(rec[i][j]);
             }

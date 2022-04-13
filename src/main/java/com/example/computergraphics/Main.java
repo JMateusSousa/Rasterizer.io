@@ -562,8 +562,8 @@ class Line {
                 y2 = aux;
             }
 
-            frag.createFragment(x, y);
-            coordinates.addToList(frag);
+//            frag.createFragment(x, y);
+//            coordinates.addToList(frag);
 
             if (dx > dy) {
                 while (x < x2) {
