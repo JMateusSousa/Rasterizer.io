@@ -23,6 +23,7 @@ public class LineSegmentController implements Initializable {
     @FXML public TextField linePointTwo;
 
     double width = 0;
+    int resolution = 0;
 //    List<List<Double>> list =  List.of(
 //            List.of(0.5, 0.5),
 //            List.of(1.5, 0.5),
@@ -45,8 +46,6 @@ public class LineSegmentController implements Initializable {
 
     @FXML
     private void plotGraphics() {
-        int resolution = 0;
-        ArrayList<Integer> points = getPoints();
         int index = resolutionBox.getSelectionModel().getSelectedIndex();
         if (index == 0) {
             resolution = 50;
@@ -55,6 +54,7 @@ public class LineSegmentController implements Initializable {
         } else {
             resolution = 10;
         }
+        ArrayList<Integer> points = getPoints();
 
         Line line = new Line();
 
@@ -82,7 +82,7 @@ public class LineSegmentController implements Initializable {
         this.paneLine.getChildren().add(makeGrid(resolution));
 
         line.setStroke(Color.WHITE);
-        line.setStrokeWidth(6);
+        line.setStrokeWidth(3);
         paneLine.getChildren().add(line);
     }
 
@@ -100,7 +100,12 @@ public class LineSegmentController implements Initializable {
         points.add(Integer.valueOf(numberOne));
         points.add(Integer.valueOf(numberTwo));
 
-        return points;
+        ArrayList<Integer> pointsCorrect = new ArrayList<>();
+
+        for(int i = 0; i < points.size(); i++) {
+            pointsCorrect.add(Integer.valueOf(points.get(i) * resolution/10));
+        }
+        return pointsCorrect;
     }
 
     public Pane makeGrid(int n) {
