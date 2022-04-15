@@ -506,82 +506,70 @@ class Line {
     public void createLine() {
         // se linha na vertical
         if (dx == 0) {
-            if(x != 0) {
+            if (x != 0) {
                 x--;
             }
-            if(dy < 0) {
-                y--;
-                while (y >= y2 - 1) {
-                    frag.createFragment(x, y);
-                    y--;
-                    this.y = y;
-                    coordinates.addToList(frag);
-                }
-            } else {
-                while (y2 >= y) {
-                    frag.createFragment(x, y);
-                    y++;
-                    this.y = y;
-                    coordinates.addToList(frag);
-                }
+            if (dy < 0) {
+                double aux = y1;
+                y1 = y2;
+                y2 = aux;
+                this.y = y1;
+            }
+            while (y2 >= y) {
+                frag.createFragment(x, y);
+                coordinates.addToList(frag);
+                y++;
             }
         }
 
         // se linha horizontal
-        else if(dy == 0) {
-            if(y != 0) {
+        else if (dy == 0) {
+            if (y != 0) {
                 y--;
             }
-            if(dx < 0) {
-                x--;
-                while(x >= x2 - 1) {
-                    frag.createFragment(x, y);
-                    x--;
-                    this.x = x;
-                    coordinates.addToList(frag);
-                }
-            } else {
-                while (x2 >= x) {
-                    frag.createFragment(x, y);
-                    x++;
-                    this.x = x;
-                    coordinates.addToList(frag);
-                }
+            if (dx < 0) {
+                double aux = x1;
+                x1 = x2;
+                x2 = aux;
+                this.x = x1;
             }
-        } else {
+            while (x2 >= x) {
+                frag.createFragment(x, y);
+                coordinates.addToList(frag);
+                x++;
+            }
+        }
+
+        // linha diagonal
+        else {
             if(dx < 0) {
                 dx = dx * -1;
-                double aux = x;
-                x = x2;
+                double aux = x1;
+                x1 = x2;
                 x2 = aux;
+                this.x = x1;
             }
             if(dy < 0){
                 dy = dy * -1;
-                double aux = y;
-                y = y2;
+                double aux = y1;
+                y1 = y2;
                 y2 = aux;
+                this.y = y1;
             }
 
-//            frag.createFragment(x, y);
-//            coordinates.addToList(frag);
-
             if (dx > dy) {
-                while (x < x2) {
-                    x++;
-                    this.x = x;
+                while (x2 >= x) {
                     y = (m * x) + b;
-                    this.y = y;
                     frag.createFragment(x, y);
                     coordinates.addToList(frag);
+                    x++;
                 }
             } else {
-                while (y < y2) {
-                    y++;
-                    this.y = y;
-                    x = (y - b) / m;
-                    this.x = x;
+                while (y2 >= y) {
+                    x = ((y - b) / m) - 1;
                     frag.createFragment(x, y);
                     coordinates.addToList(frag);
+                    y++;
                 }
             }
         }
@@ -623,13 +611,6 @@ class Initialization {
         this.b = y1 - (m * x1);
     }
 
-    public void setX(double x1) {
-        this.x = x1;
-    }
-    public void setY(double y1) {
-        this.y = y1;
-    }
-
     public void setX1(double x1) {
         this.x1 = x1;
     }
@@ -645,24 +626,6 @@ class Initialization {
     public void setY2(double y2) {
         this.y2 = y2;
     }
-
-    /*
-    //Criei getters e setters pra todas as variáveis, mas alguns desses métodos são desnecessários.
-    //De qualquer forma, deixarei aqui comentado.
-    public void setDx(double x1, double x2) {
-        this.dx = x2 - x1;
-    }
-
-    public  void setDy(double y1, double y2) {
-        this.dy = y2 - y1;
-    }
-
-    public void setB(double b) {
-        this.b = b;
-    }
-    public void setM(double m) {
-        this.m = m;
-    }*/
 
     public double getX() {
         return x;

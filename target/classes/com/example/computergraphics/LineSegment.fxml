@@ -23,9 +23,9 @@
                <children>
                   <VBox alignment="TOP_CENTER" prefHeight="371.0" prefWidth="558.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Pane fx:id="paneLine" prefHeight="340.0" prefWidth="450.0" VBox.vgrow="ALWAYS">
+                        <Pane fx:id="paneLine" prefHeight="340.0" prefWidth="450.0" scaleY="-1.0" VBox.vgrow="ALWAYS">
                            <VBox.margin>
-                              <Insets />
+                              <Insets bottom="50.0" />
                            </VBox.margin></Pane>
                         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Save  image" textAlignment="CENTER" VBox.vgrow="ALWAYS">
                            <VBox.margin>
@@ -74,7 +74,7 @@
     <Tab text="Polygons">
         <content>
             <HBox>
-                <fx:include source="Polygon.fxml"/>
+                <fx:include source="Polygon.fxml" />
             </HBox>
         </content>
     </Tab>
