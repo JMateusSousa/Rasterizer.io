@@ -37,18 +37,7 @@ public class PolygonController implements Initializable {
 
 
     double width = 0;
-    //    List<List<Double>> list =  List.of(
-//            List.of(0.5, 0.5),
-//            List.of(1.5, 0.5),
-//            List.of(2.5, 0.5),
-//            List.of(3.5, 1.5),
-//            List.of(4.5, 1.5),
-//            List.of(5.5, 1.5),
-//            List.of(6.5, 2.5),
-//            List.of(7.5, 2.5),
-//            List.of(8.5, 2.5)
-//            );
-    List<List<Double>> list = new ArrayList<List<Double>>();
+    List<List<Double>> list = new ArrayList<>();
     ArrayList<Integer> points;
     int resolution = 0;
 
@@ -115,9 +104,11 @@ public class PolygonController implements Initializable {
             triangle.setY2(points.get(3));
 
             triangle.setX3(points.get(4));
-            triangle.setX3(points.get(5));
+            triangle.setY3(points.get(5));
 
             triangle.createTriangle();
+            list = triangle.triangleCoordinates.getList();
+            System.out.println("pontos das retas: " + list);
 
         } else if(pointNumber == 4) {
             Square square = new Square();
@@ -145,18 +136,20 @@ public class PolygonController implements Initializable {
             hexagon.setY2(points.get(3));
 
             hexagon.setX3(points.get(4));
-            hexagon.setX3(points.get(5));
+            hexagon.setY3(points.get(5));
 
             hexagon.setX4(points.get(6));
-            hexagon.setX4(points.get(7));
+            hexagon.setY4(points.get(7));
 
             hexagon.setX5(points.get(8));
-            hexagon.setX5(points.get(9));
+            hexagon.setY5(points.get(9));
 
             hexagon.setX6(points.get(10));
-            hexagon.setX6(points.get(11));
+            hexagon.setY6(points.get(11));
 
             hexagon.createHexagon();
+            list = hexagon.hexagonCoordinates.getList();
+            System.out.println("pontos das retas: " + list);
         }
     }
 
@@ -203,7 +196,12 @@ public class PolygonController implements Initializable {
         points.add(points.get(1));
 
         System.out.println(points);
-        return points;
+        ArrayList<Integer> pointsCorrect = new ArrayList<>();
+
+        for(int i = 0; i < points.size(); i++) {
+            pointsCorrect.add(Integer.valueOf(points.get(i) * resolution/10));
+        }
+        return pointsCorrect;
     }
 
     private ArrayList<Integer> getSquarePoints() {
@@ -271,7 +269,12 @@ public class PolygonController implements Initializable {
 
         System.out.println(points);
 
-        return points;
+        ArrayList<Integer> pointsCorrect = new ArrayList<>();
+
+        for(int i = 0; i < points.size(); i++) {
+            pointsCorrect.add(Integer.valueOf(points.get(i) * resolution/10));
+        }
+        return pointsCorrect;
     }
 
     public Pane makeGrid(int n) {
