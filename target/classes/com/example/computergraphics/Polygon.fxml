@@ -23,7 +23,7 @@
                <VBox.margin>
                   <Insets bottom="50.0" />
                </VBox.margin></Pane>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Save  image" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+            <Button fx:id="hideLinesButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#hideLines" text="Hide Lines" textAlignment="CENTER" VBox.vgrow="ALWAYS">
                <VBox.margin>
                   <Insets bottom="50.0" />
                </VBox.margin>

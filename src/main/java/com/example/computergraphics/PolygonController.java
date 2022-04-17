@@ -2,6 +2,7 @@ package com.example.computergraphics;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
@@ -34,12 +35,14 @@ public class PolygonController implements Initializable {
     @FXML public TextField hexagonPointFour;
     @FXML public TextField hexagonPointFive;
     @FXML public TextField hexagonPointSix;
+    @FXML public Button hideLinesButton;
 
 
-    double width = 0;
     List<List<Double>> list = new ArrayList<>();
+    ArrayList<Line> line = new ArrayList<Line>();
     ArrayList<Integer> points;
-    int resolution = 0;
+    int resolution = 0, pointNumber = 3;
+    double width = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -50,8 +53,6 @@ public class PolygonController implements Initializable {
 
     @FXML
     private void plotGraphics() {
-        int pointNumber = 3;
-
         if(tabPane.getSelectionModel().getSelectedIndex() == 0) {
            points = getTrianglePoints();
         } else if(tabPane.getSelectionModel().getSelectedIndex() == 1) {
@@ -70,7 +71,7 @@ public class PolygonController implements Initializable {
             resolution = 10;
         }
 
-        ArrayList<Line> line = new ArrayList<Line>();
+        this.line = new ArrayList<>();
         for(int i = 0; i < pointNumber; i++){
             line.add(new Line());
         }
@@ -88,8 +89,8 @@ public class PolygonController implements Initializable {
         this.panePolygons.getChildren().add(makeGrid(resolution));
 
         for(int i = 0; i < pointNumber; i++) {
-            line.get(i).setStroke(Color.WHITE);
-            line.get(i).setStrokeWidth(6);
+            line.get(i).setStroke(Color.RED);
+            line.get(i).setStrokeWidth(3);
             panePolygons.getChildren().add(line.get(i));
         }
     }
@@ -292,13 +293,13 @@ public class PolygonController implements Initializable {
                 rec[i][j].setY(j * width);
                 rec[i][j].setWidth(width);
                 rec[i][j].setHeight(width);
-                rec[i][j].setFill(Color.ORANGE);
+                rec[i][j].setFill(Color.WHITE);
                 rec[i][j].setStroke(Color.BLACK);
 
                 for(int index = 0; index < list.size(); index++) {
                     if (list.get(index).contains(Arrays.asList((rec[i][j].getX() + width / 2) / width,
                             (rec[i][j].getY() + width / 2) / width))) {
-                        rec[i][j].setFill(Color.GREEN);
+                        rec[i][j].setFill(Color.BLUE);
                     }
                 }
                 p.getChildren().add(rec[i][j]);
@@ -306,5 +307,22 @@ public class PolygonController implements Initializable {
         }
 
         return p;
+    }
+
+    @FXML
+    private void hideLines() {
+        if(panePolygons.getChildren().contains(line.get(0))) {
+            for(int i = 0; i < pointNumber; i++) {
+                panePolygons.getChildren().remove(line.get(i));
+            }
+            hideLinesButton.setText("Show Lines");
+        } else {
+            for(int i = 0; i < pointNumber; i++) {
+                line.get(i).setStroke(Color.RED);
+                line.get(i).setStrokeWidth(3);
+                panePolygons.getChildren().add(line.get(i));
+            }
+            hideLinesButton.setText("Hide Lines");
+        }
     }
 }

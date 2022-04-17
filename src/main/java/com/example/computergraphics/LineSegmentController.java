@@ -1,15 +1,14 @@
 package com.example.computergraphics;
 
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Scale;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -23,21 +22,12 @@ public class LineSegmentController implements Initializable {
     @FXML public ChoiceBox resolutionBox;
     @FXML public TextField linePointOne;
     @FXML public TextField linePointTwo;
+    @FXML public Button hideLineButton;
 
     double width = 0;
     int resolution = 0;
-//    List<List<Double>> list =  List.of(
-//            List.of(0.5, 0.5),
-//            List.of(1.5, 0.5),
-//            List.of(2.5, 0.5),
-//            List.of(3.5, 1.5),
-//            List.of(4.5, 1.5),
-//            List.of(5.5, 1.5),
-//            List.of(6.5, 2.5),
-//            List.of(7.5, 2.5),
-//            List.of(8.5, 2.5)
-//            );
-    List<List<Double>> list = new ArrayList<List<Double>>();
+    List<List<Double>> list = new ArrayList<>();
+    Line line = new Line();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -57,8 +47,7 @@ public class LineSegmentController implements Initializable {
             resolution = 10;
         }
         ArrayList<Integer> points = getPoints();
-
-        Line line = new Line();
+        this.line = new Line();
 
         Initialization lineInitialization = new Initialization();
         com.example.computergraphics.Line lineAbstrated = new com.example.computergraphics.Line();
@@ -83,7 +72,7 @@ public class LineSegmentController implements Initializable {
         System.out.println(list);
         this.paneLine.getChildren().add(makeGrid(resolution));
 
-        line.setStroke(Color.WHITE);
+        line.setStroke(Color.RED);
         line.setStrokeWidth(3);
         paneLine.getChildren().add(line);
     }
@@ -125,17 +114,28 @@ public class LineSegmentController implements Initializable {
                 rec[i][j].setY(j * width);
                 rec[i][j].setWidth(width);
                 rec[i][j].setHeight(width);
-                rec[i][j].setFill(Color.ORANGE);
+                rec[i][j].setFill(Color.WHITE);
                 rec[i][j].setStroke(Color.BLACK);
 
                 if (list.contains(Arrays.asList((rec[i][j].getX() + width / 2) / width,
                             (rec[i][j].getY() + width / 2) / width))) {
-                        rec[i][j].setFill(Color.GREEN);
+                        rec[i][j].setFill(Color.BLUE);
                     }
                 p.getChildren().add(rec[i][j]);
             }
         }
 
         return p;
+    }
+
+    @FXML
+    private void hideLine() {
+        if(paneLine.getChildren().contains(line)) {
+            paneLine.getChildren().remove(line);
+            hideLineButton.setText("Show Line");
+        } else {
+            paneLine.getChildren().add(line);
+            hideLineButton.setText("Hide Line");
+        }
     }
 }
