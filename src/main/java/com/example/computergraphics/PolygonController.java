@@ -108,7 +108,7 @@ public class PolygonController implements Initializable {
             triangle.setY3(points.get(5));
 
             triangle.createTriangle();
-            list = triangle.triangleCoordinates.getList();
+            list = triangle.triangleCoordinates.getPolygonList(resolution);
             System.out.println("pontos das retas: " + list);
 
         } else if(pointNumber == 4) {
@@ -126,7 +126,7 @@ public class PolygonController implements Initializable {
             square.setY4(points.get(7));
 
             square.createSquare();
-            list = square.squareCoordinates.getList();
+            list = square.squareCoordinates.getPolygonList(resolution);
             System.out.println("pontos das retas: " + list);
         } else {
             Hexagon hexagon = new Hexagon();
@@ -149,7 +149,7 @@ public class PolygonController implements Initializable {
             hexagon.setY6(points.get(11));
 
             hexagon.createHexagon();
-            list = hexagon.hexagonCoordinates.getList();
+            list = hexagon.hexagonCoordinates.getPolygonList(resolution);
             System.out.println("pontos das retas: " + list);
         }
     }
@@ -296,11 +296,9 @@ public class PolygonController implements Initializable {
                 rec[i][j].setFill(Color.WHITE);
                 rec[i][j].setStroke(Color.BLACK);
 
-                for(int index = 0; index < list.size(); index++) {
-                    if (list.get(index).contains(Arrays.asList((rec[i][j].getX() + width / 2) / width,
-                            (rec[i][j].getY() + width / 2) / width))) {
-                        rec[i][j].setFill(Color.BLUE);
-                    }
+                if (list.contains(Arrays.asList((rec[i][j].getX() + width / 2) / width,
+                        (rec[i][j].getY() + width / 2) / width))) {
+                    rec[i][j].setFill(Color.BLUE);
                 }
                 p.getChildren().add(rec[i][j]);
             }

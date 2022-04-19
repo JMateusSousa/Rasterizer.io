@@ -150,7 +150,6 @@ class Square {
         squareCoordinates.addList(line3.getCoord());
         squareCoordinates.addList(line4.getCoord());
 
-        System.out.println("pontos das retas: " + squareCoordinates.getList());
     }
 
     public void setX1(double x1) {
@@ -326,7 +325,7 @@ class Fragment {
 
 
 class Coordinates {
-    private List<List<Double>> list = new ArrayList<>();
+    public List<List<Double>> list = new ArrayList<>();
 
     public void addToList(Fragment points) {
         List<Double> aux = Arrays.asList(points.getXp(), points.getYp());
@@ -339,11 +338,54 @@ class Coordinates {
     public void addList(List coordinates) {
         list.add(coordinates);
     }
+
+    public List getPolygonList(int n) {
+        List<List<Double>> listPolygon = new ArrayList<>();
+        System.out.println(list.size());
+        // percorre matriz
+        for(int line = 0; line < n; line++) {
+            for(int column = 0; column < n; column++) {
+
+                // se ponto da matriz pertence a alguma reta
+                for(int index = 0; index < list.size(); index++) {
+                    if(this.list.get(index).contains(Arrays.asList(line + 0.5, column + 0.5))) {
+
+                        // se sim, percorrer até o fim da linha, como buffer
+                        for(int i = column + 1; i < n; i++) {
+
+                            // se achar outro ponto na linha
+                            for(int anotherIndex = 0; anotherIndex < list.size(); anotherIndex++) {
+                                if(this.list.get(anotherIndex).contains(Arrays.asList(line + 0.5, i + 0.5))) {
+
+                                    if(this.list.get(anotherIndex).contains(Arrays.asList(line + 0.5, i + 0.5 + 1))) {
+                                        listPolygon.add(Arrays.asList(line + 0.5, i + 0.5));
+                                    }
+
+                                    // preenche de start até o próximo ponto
+                                    else {
+                                        for (int j = column; j < i; j++) {
+                                            listPolygon.add(Arrays.asList(line + 0.5, j + 0.5));
+                                        }
+                                        anotherIndex = list.size();
+                                        index = anotherIndex;
+                                        i = n + 1;
+                                        column = n + 1;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return listPolygon;
+    }
 }
 
 class Line {
     private Fragment frag = new Fragment();
-    private List<Double> aux = new ArrayList<Double>();
+    private List<Double> aux = new ArrayList<>();
     private Coordinates coordinates = new Coordinates();
     private double x, x1, x2, dx;
     private double y, y1, y2, dy;
@@ -433,6 +475,8 @@ class Line {
     }
 }
 
+
+
 class Initialization {
     private double x, x1, x2, dx;
     private double y, y1, y2, dy;
@@ -495,60 +539,16 @@ class Initialization {
 public class Main {
 
     public static void main(String[] args) {
-        //testando com os pontos P1 = (0, 0) e P2 = (9, 3)
-        Initialization lineInitialization = new Initialization();
-        Line line = new Line();
-
-
-        lineInitialization.setX1(9);
-        lineInitialization.setY1(3);
-        lineInitialization.setX2(0);
-        lineInitialization.setY2(0);
-
-        lineInitialization.initialize();
-
-        line.copyData(lineInitialization);
-
-        //line.createLine(lineInitialization.getX(), lineInitialization.getY());
-        line.createLine();
-
-        System.out.println(line.getCoord());
-
-/*
-        Triangle triangle = new Triangle();
-        triangle.setX1(0);
-        triangle.setY1(0);
-        triangle.setX2(13);
-        triangle.setY2(0);
-        triangle.setX3(6);
-        triangle.setY3(11);
-        triangle.createTriangle();*/
-
-//
-//        Square square = new Square();
-//        square.setX1(0);
-//        square.setY1(0);
-//        square.setX2(0);
-//        square.setY2(5);
-//        square.setX3(5);
-//        square.setY3(5);
-//        square.setX4(5);
-//        square.setY4(0);
-//        square.createSquare();
-
-        /*Square square = new Hexagon();
-        hexagon.setX1();
-        hexagon.setY1();
-        hexagon.setX2();
-        hexagon.setY2();
-        hexagon.setX3();
-        hexagon.setY3();
-        hexagon.setX4();
-        hexagon.setY4();
-        hexagon.setX5();
-        hexagon.setY5();
-        hexagon.setX6();
-        hexagon.setY6();
-        hexagon.createHexagon();*/
+        Square square = new Square();
+        square.setX1(0);
+        square.setY1(0);
+        square.setX2(0);
+        square.setY2(5);
+        square.setX3(5);
+        square.setY3(5);
+        square.setX4(5);
+        square.setY4(0);
+        square.createSquare();
+        System.out.println(square.squareCoordinates.getPolygonList(10));
     }
 }
